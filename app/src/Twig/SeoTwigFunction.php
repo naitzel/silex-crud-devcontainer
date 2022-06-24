@@ -22,11 +22,17 @@ class SeoTwigFunction extends TwigContainerAware
     {
         return array(
             new \Twig_SimpleFunction('seo', array($this, 'getSeo')),
+            new \Twig_SimpleFunction('seo_is', array($this, 'getIs')),
             new \Twig_SimpleFunction('seo_title', array($this, 'getTitle')),
             new \Twig_SimpleFunction('seo_description', array($this, 'getDescription')),
             new \Twig_SimpleFunction('seo_keyword', array($this, 'getKeyword')),
             new \Twig_SimpleFunction('seo_h1', array($this, 'getH1')),
         );
+    }
+
+    public function getIs()
+    {
+        return $this->getSeo('title', null) != null;
     }
 
     /**

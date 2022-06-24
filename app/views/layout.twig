@@ -1,5 +1,48 @@
-{% extends 'security/layout.twig' %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ seo_title('Silex - CRUD') }}{% endblock title %}</title>
 
-{% block body %}
-    {% block content %}{% endblock content %}
-{% endblock body %}
+    <link href="{{ asset('bin/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/ionicons/css/ionicons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/jquery-ui/themes/smoothness/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/bootstrap3-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/icheck/skins/all.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/AdminLTE.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/skins/skin-red.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" />
+
+{% if seo_is() %}
+    <meta name="description" content="{{ seo_description() }}">
+    <meta name="keywords" content="{{ seo_keyword() }}">
+{% endif %}
+
+{% for author in app.composer.authors if app.composer is defined %}
+    <meta name="author" content="{{ author.name }}" />
+{% endfor %}
+
+
+    {% block stylesheet %}{% endblock %}
+
+    {% block body %}
+        {% block content %}{% endblock content %}
+    {% endblock body %}
+    
+    <script src="{{ asset('bin/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bin/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('bin/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bin/wysihtml5/parser_rules/advanced.js') }}"></script>
+    <script src="{{ asset('bin/wysihtml5/dist/wysihtml5-0.3.0.min.js') }}"></script>
+    <script src="{{ asset('bin/bootstrap3-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.js') }}"></script>
+    <script src="{{ asset('bin/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bin/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.js') }}"></script>
+    <script src="{{ asset('bin/slimScroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('js/datatables.js') }}"></script>
+    {% block script %}{% endblock script %}
+    <script src="{{ asset('js/main.js') }}"></script>
+</body>
+</html>

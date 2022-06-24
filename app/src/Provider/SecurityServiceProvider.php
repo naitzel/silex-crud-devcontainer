@@ -88,8 +88,8 @@ class SecurityServiceProvider extends BaseSecurityServiceProvider
                     $rule['ip'],
                 );
             }
-        } catch (\PDOException $e) {
-        }
+
+        } catch (\Exception $e) { }
 
         // Permissões de rotas
         $app['security.access_rules'] = $access_rules;

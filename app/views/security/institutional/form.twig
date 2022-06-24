@@ -70,9 +70,9 @@
 
 {% block script %}
     {{ parent() }}
-    <script src="{{ asset('lib/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('lib/ckeditor/adapters/jquery.js') }}"></script>
-    <script src="{{ asset('lib/ckeditor/lang/pt-br.js') }}"></script>
+    <script src="{{ asset('bin/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('bin/ckeditor/adapters/jquery.js') }}"></script>
+    <script src="{{ asset('bin/ckeditor/lang/pt-br.js') }}"></script>
     <script>
         $(function() {
             $('.editor.body').ckeditor(ckeditor_config);

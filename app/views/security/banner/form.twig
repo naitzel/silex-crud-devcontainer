@@ -2,7 +2,7 @@
 
 {% block stylesheet %}
     {{parent()}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bin/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -93,7 +93,7 @@
 
 {% block script %}
     {{ parent() }}
-    <script src="{{ asset('lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js') }}"></script>
+    <script src="{{ asset('bin/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js') }}"></script>
 
     <script type="text/javascript">
         $(function() {

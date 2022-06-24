@@ -62,7 +62,7 @@ class InstitutionalController extends ContainerAware
                 $data['url'] = $this->get('slugify')->slugify($data['url']);
 
                 try {
-                    $insert_query = 'INSERT INTO `institutional` (`title`, `url`, `body`, `enabled`, `type`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, NOW(), NOW())';
+                    $insert_query = 'INSERT INTO `institutional` (`title`, `url`, `body`, `enabled`, `type`, `created_at`, `updated_at`, `order`) VALUES (?, ?, ?, ?, ?, NOW(), NOW(), 999)';
                     $this->db()->executeUpdate($insert_query, array($data['title'], $data['url'], $data['body'], $data['enabled'], $data['type']));
 
                     $this->flashMessage()->add('success', array('message' => 'Adicionado com sucesso.'));

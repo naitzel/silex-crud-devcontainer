@@ -1,7 +1,7 @@
 {% extends 'security/access/theme.twig' %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" href="{{ asset('lib/multiple-select/multiple-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('bin/multiple-select/multiple-select.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -84,7 +84,7 @@
 {% endblock content %}
 
 {% block script %}
-    <script src="{{ asset('lib/multiple-select/jquery.multiple.select.js') }}"></script>
+    <script src="{{ asset('bin/multiple-select/jquery.multiple.select.js') }}"></script>
     <script>
         $('#access_roles, #access_methods').multipleSelect();
     </script>

@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <title>{% block title %}Silex - CRUD{% endblock title %}</title>
 
-    <link href="{{ asset('lib/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('lib/ionicons/css/ionicons.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('lib/jquery-ui/themes/smoothness/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('lib/bootstrap3-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('lib/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('lib/datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('lib/iCheck/skins/all.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/ionicons/css/ionicons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/jquery-ui/themes/smoothness/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/bootstrap3-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('bin/icheck/skins/all.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/AdminLTE.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('css/skins/skin-purple.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/skins/skin-green.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" />
 
 {% for author in app.composer.authors if app.composer is defined %}
@@ -112,19 +112,19 @@
         {% endblock wrapper %}
         <footer class="main-footer">
             {% if app.composer is defined  %}<div class="pull-right hidden-xs"> <small>Versão: {{ app.composer.version }}</small></div>{% endif %}
-            <strong><a href="https://github.com/rogerioadris/silex-crud/">Silex CRUD</a> &copy; {{ 'now'|date('Y') }}</strong>
+            <a href="https://github.com/naitzel/silex-crud">Silex<strong>CRUD</strong></a> &copy; {{ 'now'|date('Y') }}
         </footer>
     {% endblock body %}
 
-    <script src="{{ asset('lib/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('lib/wysihtml5/parser_rules/advanced.js') }}"></script>
-    <script src="{{ asset('lib/wysihtml5/dist/wysihtml5-0.3.0.min.js') }}"></script>
-    <script src="{{ asset('lib/bootstrap3-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.js') }}"></script>
-    <script src="{{ asset('lib/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('lib/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.js') }}"></script>
-    <script src="{{ asset('lib/slimScroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('bin/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('bin/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('bin/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bin/wysihtml5/parser_rules/advanced.js') }}"></script>
+    <script src="{{ asset('bin/wysihtml5/dist/wysihtml5-0.3.0.min.js') }}"></script>
+    <script src="{{ asset('bin/bootstrap3-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.js') }}"></script>
+    <script src="{{ asset('bin/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bin/datatables-bootstrap3-plugin/media/js/datatables-bootstrap3.js') }}"></script>
+    <script src="{{ asset('bin/slimScroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('js/datatables.js') }}"></script>
     {% block script %}{% endblock script %}
     <script src="{{ asset('js/main.js') }}"></script>

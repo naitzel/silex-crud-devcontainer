@@ -10,7 +10,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-USE `test`;
+USE `silex-crud`;
 
 -- Copiando estrutura para tabela develop.seo
 CREATE TABLE `seo` (
@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `institutional` (
   `url` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
   `body` longtext COLLATE utf8_unicode_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `order` int(8) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
   `updated_at` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL,
