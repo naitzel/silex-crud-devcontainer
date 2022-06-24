@@ -1,0 +1,131 @@
+<?php
+
+/*
+ *  (c) Rogério Adriano da Silva <rogerioadris.silva@gmail.com>
+ */
+
+namespace Naitzel\SilexCrud\Controller\Security;
+
+use Naitzel\SilexCrud\Controller\ContainerAware;
+use Naitzel\SilexCrud\Form\{{ table_camel }}Form;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Class {{ table_camel }}Controller
+ */
+class {{ table_camel }}Controller extends ContainerAware
+{
+    /**
+     * Lista.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction()
+    {
+        ${{ table }} = $this->fetchAll('SELECT * FROM `{{ table }}`');
+
+        return $this->render('list.twig', array(
+            'data' => ${{ table }},
+        ));
+    }
+
+    /**
+     * Adicionar.
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function createAction(Request $request)
+    {
+        ${{ table }} = array();
+        $form = $this->createForm(new {{ table_camel }}Form(), ${{ table }}, array(
+            'action' => $this->get('url_generator')->generate('s_{{ table }}_create'),
+            'method' => 'POST',
+        ));
+
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $insert_query = "INSERT INTO `{{ table }}` ({% for column in data.columns %}{% if not column.primary %}`{{ column.name }}`{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}) VALUES ({% for column in data.columns %}{% if not column.primary %}?{% if not loop.last %}, {% endif %}{% endif %}{% endfor %})";
+                $this->executeUpdate($insert_query, array({% for column in data.columns %}{% if not column.primary %}$data['{{ column.name }}']{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}));
+
+                $this->flashMessage()->add('success', array('message' => 'Adicionado com sucesso.'));
+
+                return $this->redirect('s_{{ table }}');
+            }
+        }
+
+        return $this->render('create.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Editar.
+     *
+     * @param Request $request
+     * @param mixed   $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function editAction(Request $request, $id)
+    {
+        ${{ table }} = $this->fetchAssoc('SELECT * FROM `{{ table }}` WHERE `{{ data.primary_key }}` = ? LIMIT 1;', array($id));
+
+        if (${{ table }} === false) {
+            $this->flashMessage()->add('warning', array('message' => 'Desculpe, mais a pagina não foi encontrada.'));
+
+            return $this->redirect('s_{{ table }}');
+        }
+
+        $form = $this->createForm(new {{ table_camel }}Form(), ${{ table }}, array(
+            'action' => $this->get('url_generator')->generate('s_{{ table }}_edit', array('id' => $id)),
+            'method' => 'POST',
+        ));
+
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $data = $form->getData();
+
+                $update_query = "UPDATE `{{ table }}` SET {% for column in data.columns %}{% if not column.primary %}`{{ column.name }}` = ?{% if not loop.last %}, {% endif %}{% endif %}{% endfor %} WHERE `{{ data.primary_key }}` = ? LIMIT 1";
+                $this->executeUpdate($update_query, array({% for column in data.columns %}{% if not column.primary %}$data['{{ column.name }}'], {% endif %}{% endfor %} $data['{{ data.primary_key }}']));
+
+                $this->flashMessage()->add('success', array('message' => 'Editado com sucesso.'));
+
+                return $this->redirect('s_{{ table }}');
+            }
+        }
+
+        return $this->render('edit.twig', array(
+            'form' => $form->createView(),
+            'id' => $id,
+        ));
+    }
+
+    /**
+     * Deletar.
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $result = $this->fetchAssoc('SELECT * FROM `{{ table }}` WHERE `{{ data.primary_key }}` = ? LIMIT 1;', array($id));
+
+        if ($result === false) {
+            $this->flashMessage()->add('warning', array('message' => 'Desculpe, mais não foi encontrado.'));
+        } else {
+            $this->executeUpdate('DELETE FROM `{{ table }}` WHERE `{{ data.primary_key }}` = ?', array($id));
+
+            $this->flashMessage()->add('success', array('message' => 'Deletado com sucesso.'));
+        }
+
+        return $this->redirect('s_{{ table }}');
+    }
+}

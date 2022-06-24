@@ -1,0 +1,37 @@
+{
+    "name": "naitzel/silex-crud",
+    "version": "0.1.0",
+    "require": {
+        "php": ">=5.5",
+        "doctrine/dbal": "^2.5",
+        "twig/twig": "^1.18",
+        "silex/silex": "^1.2",
+        "symfony/console": "^2.6",
+        "symfony/twig-bridge": "^2.6",
+        "symfony/form": "^2.6",
+        "symfony/validator": "^2.6",
+        "symfony/config": "^2.6",
+        "symfony/filesystem": "^2.6",
+        "symfony/translation": "^2.6",
+        "symfony/locale": "^2.6",
+        "symfony/security": "^2.6",
+        "symfony/process": "^2.6",
+        "swiftmailer/swiftmailer": "^5.4",
+        "monolog/monolog": "^1.13",
+        "league/glide": "^0.3.5",
+        "cocur/slugify": "^1.2"
+    },
+    "require-dev": {
+        "silex/web-profiler": "^1.0"
+    },
+    "license": "MIT",
+    "authors": [{
+        "name": "Rogério Adriano",
+        "email": "rogerioadris.silva@gmail.com"
+    }],
+    "autoload": {
+        "psr-4": {
+            "Naitzel\\SilexCrud\\": "src/"
+        }
+    }
+}

@@ -1,0 +1,170 @@
+{% extends 'security/user/theme.twig' %}
+
+{% macro info(item) %}
+   <table class="table">
+      <tr>
+         <th>#</th>
+         <td>{{ item.id }}</td>
+      </tr>
+      <tr>
+         <th>Nome de usuário</th>
+         <td>{{ item.username }}</td>
+      </tr>
+      <tr>
+         <th>E-mail</th>
+         <td>{{ item.email }}</td>
+      </tr>
+      <tr>
+         <th>Nome</th>
+         <td>{{ item.name }}</td>
+      </tr>
+      <tr>
+         <th>Status</th>
+         <td>
+            {% if item.enabled %}
+               <span class="label label-success">Habilitado</span>
+            {% else %}
+               <span class="label label-danger">Desabilitado</span>
+            {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <th col="2">
+            Regras
+         </th>
+      </tr>
+      <tr>
+         <td col="2">
+            <table class="table table-condensed">
+               {% for role in item.roles %}
+                  <tr>
+                     <td><span class="label label-default">{{ role.role }}</span></td>
+                     <td>{{ role.description }}</td>
+                  </tr>
+               {% endfor %}
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <th>Data de criação</th>
+         <td>{{ item.created_at|date('d/m/Y h:i:s') }}</td>
+      </tr>
+      <tr>
+         <th>Data da última alteração</th>
+         <td>{{ item.updated_at|date('d/m/Y h:i:s') }}</td>
+      </tr>
+   </table>
+{% endmacro %}
+
+{% import _self as macro %}
+
+{% block content %}
+<section class="content-header">
+    <h1>Lista de usuários</h1>
+</section>
+<section class="content">
+   <div class="row">
+      <div class="col-xs-12">
+         <div class="box box-default">
+            <div class="box-header"></div>
+            <div class="box-body table-responsive">
+               <div class="container-fluid">
+                  <table id="banner" class="table table-bordered table-striped">
+                     <thead>
+                        <tr>
+                           <th>#</th>
+                           <th>Nome</th>
+                           <th>Usuário</th>
+                           <th>E-mail</th>
+                           <th>Data de criação</th>
+                           <th>Data última alteração</th>
+                           <th class="cell-actions">Ações</th>
+                        </tr>
+                     </thead>
+                     <tfoot>
+                        <tr>
+                           <th>#</th>
+                           <th>Nome</th>
+                           <th>Usuário</th>
+                           <th>E-mail</th>
+                           <th>Data de criação</th>
+                           <th>Data última alteração</th>
+                           <th class="cell-actions">Ações</th>
+                        </tr>
+                     </tfoot>
+                     {% if data|length > 0 %}
+                     <tbody>
+                        {% for item in data %}
+                           <tr>
+                              <td>{{ item.id }}</td>
+                              <td>{{ item.name }}</td>
+                              <td>{{ item.username }}</td>
+                              <td>{{ item.email }}</td>
+                              <td>{{ item.created_at|date('d/m/Y h:i:s') }}</td>
+                              <td>{{ item.updated_at|date('d/m/Y h:i:s') }}</td>
+                              <td>
+                                 <div class="btn-group">
+                                    <button data-toggle="modal" data-target="#modal-show-{{ item.id }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i></button>
+                                    <a href="{{ path("s_user_edit", {"id": item.id }) }}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></a>
+                                    <button data-toggle="modal" data-target="#modal-delete-{{ item.id }}" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></button>
+                                 </div>
+                                 <div class="modal fade" id="modal-show-{{ item.id }}" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                             <h4 class="modal-title">Informações sobre o usuário</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                             {{ macro.info(item) }}
+                                          </div>
+                                          <div class="modal-footer">
+                                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="modal fade" id="modal-delete-{{ item.id }}" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                             <h4 class="modal-title">Esta operação não poderá ser desfeita. Você deseja continuar?</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                             {{ macro.info(item) }}
+                                          </div>
+                                          <div class="modal-footer">
+                                             <form action="{{ path("s_user_delete", { 'id': item.id }) }}" method="post">
+                                                <input type="hidden" name="id" value="{{ item.id }}">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-danger">Deletar</button>
+                                             </form>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </td>
+                           </tr>
+                        {% endfor %}
+                     </tbody>
+                     {% endif %}
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock content %}
+
+{% block script %}
+   {{ parent() }}
+   <script>
+   (function($){
+      $('#banner').dataTable();
+      $('<div class="btn-group"><a class="btn btn-default" href="{{ path('s_user_create') }}">Novo</a></div>').appendTo('div.box-btn');
+   }(jQuery))
+   </script>
+{% endblock script %}

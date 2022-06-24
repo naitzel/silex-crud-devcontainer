@@ -1,0 +1,56 @@
+{% extends 'security/layout.twig' %}
+
+{% block body_param %}class="hold-transition login-page"{% endblock body_param %}
+
+{% block body %}
+	<div class="login-box">
+		<div class="login-logo">
+			<a href="../../index2.html">
+				<b>Silex</b>CRUD</a>
+		</div>
+		<!-- /.login-logo -->
+		<div class="login-box-body">
+			<p class="login-box-msg">Faça login para iniciar sua sessão</p>
+
+			<form class="form-signin" action="{{ path('painel_login_check') }}" method="post">
+				<div class="form-group has-feedback">
+					<input type="text" name="_username" class="form-control" placeholder="Email ou Usuário" required="required" autofocus>
+					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<input type="password" name="_password" class="form-control" placeholder="Senha" required="required">
+					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+				<div class="row">
+					<div class="col-xs-8">
+						{# <div class="checkbox icheck">
+							<label>
+								<input type="checkbox">
+								Remember Me
+							</label>
+						</div> #}
+					</div>
+					<!-- /.col -->
+					<div class="col-xs-4">
+						<button type="submit" class="btn btn bg-purple btn-block btn-flat">Sign In</button>
+					</div>
+					<!-- /.col -->
+				</div>
+
+                {% if error is defined and error %}
+                    <hr>
+                    <div class="callout callout-danger">
+                        <h4>Ops...</h4>
+                        {% if error == 'Bad credentials.' %}
+                            <p>Login ou senha inválido.</p>
+                        {% else %}
+                            <p>{{ error }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+			</form>
+		</div>
+		<!-- /.login-box-body -->
+	</div>
+	<!-- /.login-box -->
+{% endblock body %}

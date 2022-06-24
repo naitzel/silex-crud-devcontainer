@@ -1,0 +1,91 @@
+{% extends 'security/access/theme.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('lib/multiple-select/multiple-select.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{% block form_title %}{% endblock form_title %}
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            {{ form_start(form) }}
+                <div class="box box-default">
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.path) }}
+                                    {{ form_errors(form.path) }}
+                                    {{ form_widget(form.path, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class='form-group'>
+                                    {{ form_label(form.roles) }}
+                                    {{ form_errors(form.roles) }}
+                                    {{ form_widget(form.roles, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.methods) }}
+                                    {{ form_errors(form.methods) }}
+                                    {{ form_widget(form.methods, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.ip) }}
+                                    {{ form_errors(form.ip) }}
+                                    {{ form_widget(form.ip, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.host) }}
+                                    {{ form_errors(form.host) }}
+                                    {{ form_widget(form.host, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+                    </div>
+
+                    <div class="box-footer">
+                        <div class="row-fluid">
+                            <div class="col-md-6">
+                                <a href="{{ path('s_access') }}" class="btn btn-default">Voltar</a>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="submit" class="btn btn-primary">{{ btn_acao }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"><br></div>
+
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</section>
+<!-- END Main content -->
+{% endblock content %}
+
+{% block script %}
+    <script src="{{ asset('lib/multiple-select/jquery.multiple.select.js') }}"></script>
+    <script>
+        $('#access_roles, #access_methods').multipleSelect();
+    </script>
+{% endblock script %}

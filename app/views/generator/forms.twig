@@ -1,0 +1,69 @@
+<?php
+
+/**
+ *  (c) Rogério Adriano da Silva <rogerioadris.silva@gmail.com>.
+ */
+
+namespace Naitzel\SilexCrud\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * Class {{ table_camel }}Form
+ */
+class {{ table_camel }}Form extends AbstractType
+{
+    /**
+     * Builds the form.
+     *
+     * This method is called for each type in the hierarchy starting from the
+     * top most type. Type extensions can further modify the form.
+     *
+     * @see FormTypeExtensionInterface::buildForm()
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+{% for column in data.columns_form %}
+            ->add('{{ column.name }}', '{{ column.type }}', array(
+                'required' => {% if column.nullable %}true{% else %}false{% endif %},
+                'label' => '{{ column.title }}',
+                'constraints' => array(
+{% if column.nullable %}                    new Assert\NotBlank(),
+{% endif %}{% if column.lenght > 3 %}                    new Assert\Length(array(
+                        // 'min' => 8,
+                        'max' => {{ column.lenght }},
+                    ))
+{% endif %}
+                ),
+            ))
+{% endfor %}
+        ;
+    }
+
+    /**
+     * Configures the options for this type.
+     *
+     * @param OptionsResolver $resolver The resolver for the options.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        //
+    }
+
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
+     */
+    public function getName()
+    {
+        return '{{table}}';
+    }
+}

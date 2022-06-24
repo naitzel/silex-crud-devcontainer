@@ -1,0 +1,43 @@
+<li {% if menu_selected is defined and menu_selected == 'institutional_type' %}class="active"{% endif %}>
+    <a href="{{ path('s_institutional_type') }}">
+        <i class="fa fa-globe"></i> <span>Página institucional</span>
+    </a>
+</li>
+
+<li {% if menu_selected is defined and menu_selected == 'banner_type' %}class="active"{% endif %}>
+    <a href="{{ path('s_banner_type') }}">
+        <i class="fa fa-television"></i> <span>Banner</span>
+    </a>
+</li>
+
+<li {% if menu_selected is defined and menu_selected == 'seo' %}class="active"{% endif %}>
+    <a href="{{ path('s_seo') }}">
+        <i class="fa fa-google"></i> <span>S.E.O.</span>
+    </a>
+</li>
+
+{% if 'ROLE_ADMIN' in app.user.roles %}
+<li class="treeview {% if menu_selected is defined and menu_selected in ['user', 'role', 'access'] %}active{% endif %}">
+    <a href="javascript:;">
+        <i class="fa fa-cogs"></i> <span>Configurações</span>
+        <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu menu-open">
+        <li {% if menu_selected is defined and menu_selected == 'user' %}class="active"{% endif %}>
+            <a href="{{ path('s_user') }}">
+                <i class="fa fa-users"></i> <span>Usuários</span>
+            </a>
+        </li>
+        <li {% if menu_selected is defined and menu_selected == 'role' %}class="active"{% endif %}>
+            <a href="{{ path('s_role') }}">
+                <i class="fa fa-key"></i> <span>Regras</span>
+            </a>
+        </li>
+        <li {% if menu_selected is defined and menu_selected == 'access' %}class="active"{% endif %}>
+            <a href="{{ path('s_access') }}">
+                <i class="fa fa-link"></i> <span>Regra de acesso</span>
+            </a>
+        </li>
+    </ul>
+</li>
+{% endif %}

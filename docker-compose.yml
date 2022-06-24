@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  nginx:
+    depends_on:
+      - fpm
+    links:
+      - fpm
+    build:
+      context: .
+      dockerfile: .devcontainer/nginx/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./.devcontainer/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./.devcontainer/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./app/public/index.php:/var/www/html/public/index.php:ro
+      - ./tmp/nginx:/var/log/nginx:rw
+
+  fpm:
+    build:
+      context: .
+      dockerfile: .devcontainer/php-fpm/Dockerfile
+    volumes:
+      - ./.devcontainer/php-fpm/config.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
+      - ./app/public:/var/www/html/public:rw
+      - ./app/src:/var/www/html/src:rw
+      - ./app/views:/var/www/html/views:rw

@@ -1,0 +1,116 @@
+{% extends 'security/banner/theme.twig' %}
+
+{% block stylesheet %}
+    {{parent()}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.css') }}">
+{% endblock %}
+
+{% block content %}
+
+{% block form_title %}{% endblock form_title %}
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            {{ form_start(form) }}
+                <div class="box box-default">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class='form-group'>
+                                    {{ form_label(form.title) }}
+                                    {{ form_errors(form.title) }}
+                                    {{ form_widget(form.title, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.url) }}
+                                    {{ form_errors(form.url) }}
+                                    {{ form_widget(form.url, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class='form-group'>
+                                    {{ form_label(form.enabled) }}
+                                    {{ form_errors(form.enabled) }}
+                                    {{ form_widget(form.enabled, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.image) }}
+                                    {{ form_errors(form.image) }}
+                                    {{ form_widget(form.image, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.show_in) }}
+                                    {{ form_errors(form.show_in) }}
+                                    {{ form_widget(form.show_in, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.show_out) }}
+                                    {{ form_errors(form.show_out) }}
+                                    {{ form_widget(form.show_out, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {{ form_rest(form) }}
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="row-fluid">
+                            <div class="col-md-6">
+                                <a href="{{ path('s_banner', {'banner_type': banner_type.id}) }}" class="btn btn-default">Voltar</a>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="submit" class="btn btn-primary">{{ btn_acao }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"><br></div>
+
+                </div><!-- /.box -->
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</section>
+<!-- END Main content -->
+{% endblock content %}
+
+{% block script %}
+    {{ parent() }}
+    <script src="{{ asset('lib/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js') }}"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            var options = {
+                dateFormat: 'yy-mm-dd',
+                timeFormat: 'HH:mm:ss'
+            };
+            $('#banner_show_in').datetimepicker($.extend(options, {
+                onClose: function(selectedDate) {
+                    $( "#banner_show_out" ).datepicker( "option", "minDate", selectedDate );
+                }
+            }));
+            $('#banner_show_out').datetimepicker($.extend(options, {
+                onClose: function(selectedDate) {
+                    $( "#banner_show_in" ).datepicker( "option", "minDate", selectedDate );
+                }
+            }));
+        });
+    </script>
+{% endblock script %}

@@ -1,0 +1,86 @@
+{% extends 'security/bannertype/theme.twig' %}
+
+{% block content %}
+
+{% block form_title %}{% endblock form_title %}
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            {{ form_start(form) }}
+                <div class="box box-default">
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class='form-group'>
+                                    {{ form_label(form.title) }}
+                                    {{ form_errors(form.title) }}
+                                    {{ form_widget(form.title, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.enabled) }}
+                                    {{ form_errors(form.enabled) }}
+                                    {{ form_widget(form.enabled, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class='form-group'>
+                                    {{ form_label(form.width) }}
+                                    {{ form_errors(form.width) }}
+                                    <div class="input-group">
+                                        {{ form_widget(form.width, { attr: { 'class': 'form-control' }}) }}
+                                        <div class="input-group-addon">
+                                            <strong>PX</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class='form-group'>
+                                    {{ form_label(form.height) }}
+                                    {{ form_errors(form.height) }}
+                                    <div class="input-group">
+                                        {{ form_widget(form.height, { attr: { 'class': 'form-control' }}) }}
+                                        <div class="input-group-addon">
+                                            <strong>PX</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        {{ form_rest(form) }}
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="row-fluid">
+                            <div class="col-md-6">
+                                <a href="{{ path('s_banner_type') }}" class="btn btn-default">Voltar</a>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="submit" class="btn btn-primary">{{ btn_acao }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"><br></div>
+
+                </div><!-- /.box -->
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</section>
+<!-- END Main content -->
+{% endblock content %}

@@ -1,6 +1,6 @@
 {
   "name": "Silex Crud",
-  "dockerComposeFile": "docker-compose.yml",
+  "dockerComposeFile": "../docker-compose.yml",
   "service": "fpm",
   "workspaceFolder": "/var/www/html"
 }

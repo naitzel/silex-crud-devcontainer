@@ -1,0 +1,113 @@
+.main-header .logo {
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2em;
+    background-color: #222D32;
+    padding-top: 0;
+}
+
+.page-login {
+    padding-top: 100px;
+    padding-bottom: 40px;
+}
+
+.page-login .btn {
+    outline: 0;
+    border: none;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    box-shadow: inset 2px -3px rgba(0, 0, 0, 0.15);
+}
+
+.page-login .btn:focus {
+    outline: 0;
+    -webkit-outline: 0;
+    -moz-outline: 0;
+}
+
+.page-login .form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+.page-login .form-signin .form-signin-heading {
+    margin-bottom: 35px;
+    font-size: 20px;
+}
+
+.page-login .form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    margin: 10px 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.page-login .form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.page-login .form-signin-heading {
+    color: #569900;
+    text-align: center;
+    text-shadow: 0 2px 2px rgba(115, 125, 132, 0.5);
+}
+
+.page-login .form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    margin: 10px 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.page-login .form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.page-login .form-signin-heading {
+    color: #569900;
+    text-align: center;
+    text-shadow: 0 2px 2px rgba(115, 125, 132, 0.5);
+}
+
+.page-login .btn-luz {
+    color: #FFFFFF;
+    background-color: #569900;
+    border-color: #569900;
+}
+
+.page-login .btn-luz:hover,
+.page-login .btn-luz:focus,
+.page-login .btn-luz:active,
+.page-login .btn-luz.active,
+.page-login .open .dropdown-toggle.btn-luz {
+    color: #FFFFFF;
+    background-color: #538412;
+    border-color: #569900;
+}
+
+.cell-actions {
+    min-width: 60px;
+}
+
+.badge.badge-right-top {
+    position: absolute;
+    z-index: 10;
+    top: -6px;
+    right: -6px;
+}
+
+.btn-move-v {
+    cursor: ns-resize;
+}

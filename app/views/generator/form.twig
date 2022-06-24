@@ -1,0 +1,68 @@
+{{ '{% extends \'security/' }}{{ table }}{{ '/theme.twig\' %}' }}
+
+{{ '{% block content %}' }}
+
+{{ '{% block form_title %}' }}{{ '{% endblock form_title %}' }}
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            {{ '{{ form_start(form) }}' }}
+                <div class="box box-default">
+                    <div class="box-body">
+
+{% for column in data.columns_form %}
+                        <div class='form-group'>
+                            {{ '{{' }} form_label(form.{{ column.name }}) {{ '}}' }}
+                            {{ '{{' }} form_errors(form.{{ column.name }}) {{ '}}' }}
+                            {{ '{{' }} form_widget(form.{{ column.name }}, { attr: { 'class': 'form-control{% if column.type in ['textarea'] %} editor {{ column.name }}{% endif %}' }}) {{ '}}' }}
+                        </div>
+
+{% endfor %}
+
+                        {{ '{{ form_rest(form) }}' }}
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="row-fluid">
+                            <div class="col-md-6">
+                                <a href="{{ '{{' }} path('s_{{ table|lower }}') {{ '}}' }}" class="btn btn-default">Voltar</a>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="submit" class="btn btn-primary">{{ '{{ btn_acao }}' }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"><br></div>
+
+                </div><!-- /.box -->
+            {{ '{{ form_end(form) }}' }}
+        </div>
+    </div>
+
+</section>
+<!-- END Main content -->
+{{ '{% endblock content %}' }}
+
+{% set itens = [] %}
+{% for column in data.columns_form if column.type in ['textarea'] %}{% set itens = itens|merge([column]) %}{% endfor %}
+{% if itens|length > 0 %}
+{{ '{% block script %}' }}
+{% autoescape %}
+    {{ '{{ parent() }}' }}
+    <script src="{{ '{{ asset(\'lib/ckeditor/ckeditor.js\') }}' }}"></script>
+    <script src="{{ '{{ asset(\'lib/ckeditor/adapters/jquery.js\') }}' }}"></script>
+    <script src="{{ '{{ asset(\'lib/ckeditor/lang/pt-br.js\') }}' }}"></script>
+    <script>
+        $(function() {
+{% for column in itens %}
+            $('.editor.{{ column.name }}').ckeditor(ckeditor_config);
+{% endfor %}
+        });
+    </script>
+{% endautoescape %}
+{{ '{% endblock script %}' }}
+{% endif %}

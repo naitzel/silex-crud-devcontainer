@@ -1,0 +1,126 @@
+{{ '{% extends \'security/' }}{{ table }}{{ '/theme.twig\' %}' }}
+
+
+{{ '{% macro info(item) %}' }}
+    <table class="table">
+        <tr>
+            <td>#</td>
+            <td>{{ '{{ item.' ~ data.primary_key ~ ' }}' }}</td>
+        </tr>
+{% for column in data.columns_form %}
+        <tr>
+            <td>{{ column.name }}</td>
+            <td>{{ '{{ item.' ~ column.name ~ ' }}' }}</td>
+        </tr>
+{% endfor %}
+    </table>
+{{ '{% endmacro %}' }}
+
+{{ '{% import _self as macro %}' }}
+
+
+{{ '{% block content %}' }}
+<section class="content-header">
+    <h1>Lista {{ table | camelize }}</h1>
+</section>
+
+<section class="content">
+   <div class="row">
+      <div class="col-xs-12">
+         <div class="box box-default">
+            <div class="box-header"></div>
+            <div class="box-body table-responsive">
+               <div class="container-fluid">
+                  <table id="{{ table }}_list" class="table table-bordered table-striped">
+                     <thead>
+                        <tr>
+                            <th>#</th>
+{% for column in data.columns_form %}                            <th>{{ column.name }}</th>
+{% endfor %}
+                            <th class="cell-actions">Ações</th>
+                        </tr>
+                     </thead>
+                     <tfoot>
+                        <tr>
+                            <th>#</th>
+{% for column in data.columns_form %}                            <th>{{ column.name }}</th>
+{% endfor %}
+                           <th class="cell-actions">Ações</th>
+                        </tr>
+                     </tfoot>
+                     <tbody>
+                        {{ '{% for item in data %}' }}
+                            <tr id="order-{{ '{{ item.' ~ data.primary_key ~ ' }}' }}">
+                                <td>{{ '{{ item.' ~ data.primary_key ~ ' }}' }}</td>
+{% for column in data.columns_form %}                                <td>{{ '{{ item.' ~ column.name ~ ' }}' }}</td>
+{% endfor %}
+                                <td>
+                                    <div class="btn-group">
+                                        <button data-toggle="modal" data-target="#modal-show-{{ '{{ item.' ~ data.primary_key ~ ' }}' }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i></button>
+                                        <a href="{{ '{{ path("s_' }}{{ table|lower }}{{ '_edit", {"id": item.id }) }}' }}" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></a>
+                                        <button data-toggle="modal" data-target="#modal-delete-{{ '{{ item.' ~ data.primary_key ~ ' }}' }}" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></button>
+                                    </div>
+                                    <div class="modal fade" id="modal-show-{{ '{{ item.' ~ data.primary_key ~ ' }}' }}" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title">Informações sobre</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{ '{{ macro.info(item) }}' }}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="modal-delete-{{ '{{ item.' ~ data.primary_key ~ ' }}' }}" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title">Esta operação não poderá ser desfeita. Você deseja continuar?</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{ '{{ macro.info(item) }}' }}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{{ '{{ path("s_' }}{{ table|lower }}{{ '_delete", { "id": item.' }}{{ data.primary_key }}{{ ' }) }}' }}" method="post">
+                                                        <input type="hidden" name="id" value="{{ '{{ item.' ~ data.primary_key ~ ' }}' }}">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-danger">Deletar</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {{ '{% endfor %}' }}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{{ '{% endblock content %}' }}
+
+
+{{ '{% block script %}' }}
+{% autoescape %}
+   {{ '{{ parent() }}' }}
+   <script type="text/javascript">
+      (function($) {
+          $(function() {
+              $("#{{ table }}_list").dataTable();
+              $('<div class="btn-group"><a class="btn btn-default" href="{{ '{{' }} path('s_{{ table }}_create') {{ '}}' }}">Novo</a></div>').appendTo('div.box-btn');
+          });
+      }(jQuery));
+   </script>
+{% endautoescape %}
+{{ '{% endblock script %}' }}

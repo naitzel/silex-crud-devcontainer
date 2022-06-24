@@ -1,1 +1,4 @@
 .devcontainer
+tmp/
+LICENSE
+README.md

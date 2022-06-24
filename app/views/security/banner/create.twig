@@ -1,0 +1,8 @@
+{% extends 'security/banner/form.twig' %}
+{% set btn_acao = 'Criar' %}
+
+{% block form_title %}
+<section class="content-header">
+    <h1>Banner: <strong>{{ banner_type.title }} <small>({{ banner_type.width }}x{{ banner_type.height }})</small></strong></h1>
+</section>
+{% endblock form_title %}

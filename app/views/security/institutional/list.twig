@@ -1,0 +1,159 @@
+{% extends 'security/institutional/theme.twig' %}
+
+{% macro info(item) %}
+   <table class="table">
+      <tr>
+         <td>#</td>
+         <td>{{ item.id }}</td>
+      </tr>
+      <tr>
+         <td>Titulo</td>
+         <td>{{ item.title }}</td>
+      </tr>
+      <tr>
+         <td>Url</td>
+         <td>{{ item.url }}</td>
+      </tr>
+      <tr>
+         <td>Status</td>
+         <td>
+            {% if item.enabled %}
+               <span class="label label-success">Habilitado</span>
+            {% else %}
+               <span class="label label-danger">Desabilitado</span>
+            {% endif %}
+         </td>
+      </tr>
+      <tr>
+         <td>Data de criação</td>
+         <td>{{ item.created_at|date('d/m/Y h:i:s') }}</td>
+      </tr>
+      <tr>
+         <td>Data da última alteração</td>
+         <td>{{ item.updated_at|date('d/m/Y h:i:s') }}</td>
+      </tr>
+   </table>
+{% endmacro %}
+
+{% import _self as macro %}
+
+{% block content %}
+<section class="content-header">
+    <h1>Categoria: <strong>{{ institutional_type.title }}</strong></h1>
+</section>
+
+<section class="content">
+   <div class="row">
+      <div class="col-xs-12">
+         <div class="box box-default">
+            <div class="box-header"></div>
+            <div class="box-body table-responsive">
+               <div class="container-fluid">
+                  <table id="institutional" class="table table-bordered table-striped">
+                     <thead>
+                        <tr>
+                           <th>#</th>
+                           <th>Titulo</th>
+                           <th>Url</th>
+                           <th>Status</th>
+                           <th>Data de criação</th>
+                           <th>Data última alteração</th>
+                           <th class="cell-actions">Ações</th>
+                        </tr>
+                     </thead>
+                     <tfoot>
+                        <tr>
+                           <th>#</th>
+                           <th>Titulo</th>
+                           <th>Url</th>
+                           <th>Status</th>
+                           <th>Data de criação</th>
+                           <th>Data última alteração</th>
+                           <th class="cell-actions">Ações</th>
+                        </tr>
+                     </tfoot>
+                     {% if data|length > 0 %}
+                     <tbody>
+                        {% for item in data %}
+                           <tr>
+                              <td>{{ item.id }}</td>
+                              <td>{{ item.title }}</td>
+                              <td>{{ item.url }}</td>
+                              <td>
+                                 {% if item.enabled %}
+                                    <span class="label label-success">Habilitado</span>
+                                 {% else %}
+                                    <span class="label label-danger">Desabilitado</span>
+                                 {% endif %}
+                              </td>
+                              <td>{{ item.created_at|date('d/m/Y h:i:s') }}</td>
+                              <td>{{ item.updated_at|date('d/m/Y h:i:s') }}</td>
+                              <td>
+                                 <div class="btn-group">
+                                    <button data-toggle="modal" data-target="#modal-show-{{ item.id }}" class="btn btn-default"><i class="fa fa-eye"></i></button>
+                                    <a href="{{ path("s_institutional_edit", {"id": item.id, 'institutional_type': institutional_type.id}) }}" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                                    <button data-toggle="modal" data-target="#modal-delete-{{ item.id }}" class="btn btn-default btn-delete"><i class="fa fa-trash"></i></button>
+                                 </div>
+
+                                 <div class="modal fade" id="modal-show-{{ item.id }}" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                             <h4 class="modal-title">Informações sobre o tipo banner</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                             {{ macro.info(item) }}
+                                          </div>
+                                          <div class="modal-footer">
+                                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="modal fade" id="modal-delete-{{ item.id }}" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                             <h4 class="modal-title">Esta operação não poderá ser desfeita. Você deseja continuar?</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                             {{ macro.info(item) }}
+                                          </div>
+                                          <div class="modal-footer">
+                                             <form action="{{ path("s_institutional_delete", { 'id': item.id, 'institutional_type': institutional_type.id}) }}" method="post">
+                                                <input type="hidden" name="id" value="{{ item.id }}">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-danger">Deletar</button>
+                                             </form>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                              </td>
+                           </tr>
+                        {% endfor %}
+                     </tbody>
+                     {% endif %}
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock content %}
+
+{% block script %}
+   {{ parent() }}
+   <script>
+   (function($){
+      $('#institutional').dataTable();
+      $('<div class="btn-group"><a class="btn btn-default" href="{{ path('s_institutional_type') }}"><i class="fa fa-angle-double-left"></i> Voltar</a><a class="btn btn-default" href="{{ path('s_institutional_create', {'institutional_type': institutional_type.id }) }}">Novo</a></div>').appendTo('div.box-btn');
+   }(jQuery))
+   </script>
+{% endblock script %}

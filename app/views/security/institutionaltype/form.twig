@@ -1,0 +1,81 @@
+{% extends 'security/institutionaltype/theme.twig' %}
+
+{% block content %}
+
+{% block form_title %}{% endblock form_title %}
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            {{ form_start(form) }}
+                <div class="box box-default">
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class='form-group'>
+                                    {{ form_label(form.title) }}
+                                    {{ form_errors(form.title) }}
+                                    {{ form_widget(form.title, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class='form-group'>
+                                    {{ form_label(form.url) }}
+                                    {{ form_errors(form.url) }}
+                                    {{ form_widget(form.url, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class='form-group'>
+                                    {{ form_label(form.enabled) }}
+                                    {{ form_errors(form.enabled) }}
+                                    {{ form_widget(form.enabled, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='form-group'>
+                            {{ form_label(form.body) }}
+                            {{ form_errors(form.body) }}
+                            {{ form_widget(form.body, { attr: { 'class': 'form-control editor body' }}) }}
+                        </div>
+
+                        {{ form_rest(form) }}
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="row-fluid">
+                            <div class="col-md-6">
+                                <a href="{{ path('s_institutional_type') }}" class="btn btn-default">Voltar</a>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="submit" class="btn btn-primary">{{ btn_acao }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"><br></div>
+
+                </div><!-- /.box -->
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</section>
+<!-- END Main content -->
+{% endblock content %}
+
+{% block script %}
+    {{ parent() }}
+    <script src="{{ asset('lib/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('lib/ckeditor/adapters/jquery.js') }}"></script>
+    <script src="{{ asset('lib/ckeditor/lang/pt-br.js') }}"></script>
+    <script>
+        $(function() {
+            $('.editor.body').ckeditor(ckeditor_config);
+        });
+    </script>
+{% endblock script %}

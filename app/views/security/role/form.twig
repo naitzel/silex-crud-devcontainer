@@ -1,0 +1,56 @@
+{% extends 'security/role/theme.twig' %}
+
+{% block content %}
+
+{% block form_title %}{% endblock form_title %}
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            {{ form_start(form) }}
+                <div class="box box-default">
+                    <div class="box-body">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class='form-group'>
+                                    {{ form_label(form.role) }}
+                                    {{ form_errors(form.role) }}
+                                    {{ form_widget(form.role, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class='form-group'>
+                                    {{ form_label(form.description) }}
+                                    {{ form_errors(form.description) }}
+                                    {{ form_widget(form.description, { attr: { 'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_rest(form) }}
+                    </div>
+
+                    <div class="box-footer">
+                        <div class="row-fluid">
+                            <div class="col-md-6">
+                                <a href="{{ path('s_role') }}" class="btn btn-default">Voltar</a>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="submit" class="btn btn-primary">{{ btn_acao }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"><br></div>
+
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</section>
+<!-- END Main content -->
+{% endblock content %}
