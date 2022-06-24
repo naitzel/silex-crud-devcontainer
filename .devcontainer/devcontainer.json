@@ -1,0 +1,6 @@
+{
+  "name": "Silex Crud",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "nginx",
+  "workspaceFolder": "/"
+}

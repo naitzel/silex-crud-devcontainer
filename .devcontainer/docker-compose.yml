@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  nginx:
+    build: 
+      context: ../
+      dockerfile: .devcontainer/nginx/Dockerfile
+    ports:
+      - 80:80
