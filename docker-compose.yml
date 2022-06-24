@@ -15,14 +15,31 @@ services:
       - ./.devcontainer/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./.devcontainer/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./app/public/index.php:/var/www/html/public/index.php:ro
+      - ./app/public/css:/var/www/html/public/css:rw
+      - ./app/public/imgs:/var/www/html/public/imgs:rw
+      - ./app/public/js:/var/www/html/public/js:rw
+      - ./app/public/upload:/var/www/html/public/upload:rw
       - ./tmp/nginx:/var/log/nginx:rw
 
   fpm:
     build:
       context: .
       dockerfile: .devcontainer/php-fpm/Dockerfile
+    env_file:
+      - .env
     volumes:
       - ./.devcontainer/php-fpm/config.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
       - ./app/public:/var/www/html/public:rw
       - ./app/src:/var/www/html/src:rw
       - ./app/views:/var/www/html/views:rw
+
+  mysql:
+    build:
+      context: .
+      dockerfile: .devcontainer/mysql/Dockerfile
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - .env
+    volumes:
+        - ./app/docs/database.sql:/docker-entrypoint-initdb.d/database.sql:ro
+        - ./.devcontainer/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
